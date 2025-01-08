@@ -48,9 +48,17 @@ const HeroSection = () => {
             lectures guided by industry expert mentors.
           </p>
           <div className="flex justify-center md:justify-start">
-            <button className="bg-white text-blue-500 px-6 py-3 rounded font-medium shadow-md hover:bg-blue-100 w-50 sm:w-60 h-12">
-              📄 Download Brochure
-            </button>
+          <button className="bg-white text-black px-6 py-3 rounded font-medium shadow-md hover:bg-blue-100 w-50 sm:w-60 h-12 flex items-center justify-center gap-2">
+  {/* SVG Icon */}
+  <img
+    src="/dd.svg" // Update path as needed
+    alt="Download Icon"
+    className="w-5 h-5"
+  />
+  {/* Button Text */}
+  Download Brochure
+</button>
+
           </div>
         </div>
 
