@@ -12,6 +12,46 @@ const HeroSection = () => {
     setFormVisible(!formVisible);
   };
 
+  // Contact Form Logic
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    course: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (!formData.email.trim()) newErrors.email = "Email is required.";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Email is invalid.";
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required.";
+    if (!formData.course.trim() || formData.course === "Select Course")
+      newErrors.course = "Please select a course.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validate()) {
+      console.log("Form Data Submitted:", formData);
+      alert("Form submitted successfully!");
+      setFormData({ name: "", email: "", phone: "", course: "" });
+    }
+  };
+
   return (
     <div
       className={`relative w-full h-screen bg-cover bg-no-repeat bg-center transition-opacity duration-1000 ${
@@ -48,17 +88,14 @@ const HeroSection = () => {
             lectures guided by industry expert mentors.
           </p>
           <div className="flex justify-center md:justify-start">
-          <button className="bg-white text-black px-6 py-3 rounded font-medium shadow-md hover:bg-blue-100 w-50 sm:w-60 h-12 flex items-center justify-center gap-2">
-  {/* SVG Icon */}
-  <img
-    src="/dd.svg" // Update path as needed
-    alt="Download Icon"
-    className="w-5 h-5"
-  />
-  {/* Button Text */}
-  Download Brochure
-</button>
-
+            <button className="bg-white text-black px-6 py-3 rounded font-medium shadow-md hover:bg-blue-100 w-50 sm:w-60 h-12 flex items-center justify-center gap-2">
+              <img
+                src="/dd.svg" // Replace with actual image path
+                alt="Download Icon"
+                className="w-5 h-5"
+              />
+              Download Brochure
+            </button>
           </div>
         </div>
 
@@ -82,29 +119,86 @@ const HeroSection = () => {
           <p className="text-sm text-gray-500 mb-4">
             Please contact us in case of any query.
           </p>
-          <form className="space-y-4">
-            <input
-              type="text"
-              placeholder="Your name"
-              className="w-full border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
-            />
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="w-full border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
-            />
-            <input
-              type="tel"
-              placeholder="Your phone number"
-              className="w-full border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
-            />
-            <select
-              className="w-full border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
-            >
-              <option>Select Course</option>
-              <option>Data Science</option>
-              <option>AI</option>
-            </select>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* Name Input */}
+            <div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`w-full border-gray-300 rounded-lg px-4 py-2 focus:ring ${
+                  errors.name
+                    ? "border-red-500 ring-red-300"
+                    : "focus:ring-blue-300"
+                }`}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
+            </div>
+
+            {/* Email Input */}
+            <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Your email address"
+                value={formData.email}
+                onChange={handleChange}
+                className={`w-full border-gray-300 rounded-lg px-4 py-2 focus:ring ${
+                  errors.email
+                    ? "border-red-500 ring-red-300"
+                    : "focus:ring-blue-300"
+                }`}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+            </div>
+
+            {/* Phone Input */}
+            <div>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Your phone number"
+                value={formData.phone}
+                onChange={handleChange}
+                className={`w-full border-gray-300 rounded-lg px-4 py-2 focus:ring ${
+                  errors.phone
+                    ? "border-red-500 ring-red-300"
+                    : "focus:ring-blue-300"
+                }`}
+              />
+              {errors.phone && (
+                <p className="text-red-500 text-sm">{errors.phone}</p>
+              )}
+            </div>
+
+            {/* Course Selection */}
+            <div>
+              <select
+                name="course"
+                value={formData.course}
+                onChange={handleChange}
+                className={`w-full border-gray-300 rounded-lg px-4 py-2 focus:ring ${
+                  errors.course
+                    ? "border-red-500 ring-red-300"
+                    : "focus:ring-blue-300"
+                }`}
+              >
+                <option>Select Course</option>
+                <option>Data Science</option>
+                <option>AI</option>
+              </select>
+              {errors.course && (
+                <p className="text-red-500 text-sm">{errors.course}</p>
+              )}
+            </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
               className="bg-blue-500 text-white w-full py-2 rounded-lg hover:bg-blue-600"
@@ -115,15 +209,14 @@ const HeroSection = () => {
         </div>
       </div>
 
-    {/* Image of the person */}
-<div className="absolute bottom-0 left-28 transform translate-y-10 md:translate-y-0 md:translate-x-0 flex justify-center md:justify-start">
-  <img
-    src="/man.png" // Replace with the actual image path
-    alt="Person with laptop"
-    className=" w-86 h-auto mb-28 ml-96 transform scale-x-[-1]"
-  />
-</div>
-
+      {/* Image of the person */}
+      <div className="absolute bottom-0 left-28 transform translate-y-10 md:translate-y-0 md:translate-x-0 flex justify-center md:justify-start">
+        <img
+          src="/man.png" // Replace with actual image path
+          alt="Person with laptop"
+          className="w-86 h-auto mb-28 ml-96 transform scale-x-[-1]"
+        />
+      </div>
     </div>
   );
 };
