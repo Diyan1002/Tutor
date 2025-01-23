@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // For mobile menu
@@ -13,6 +15,7 @@ const Navbar = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -22,6 +25,9 @@ const Navbar = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const handleApplyNow = () => {
+    navigate('/signup');
+  };
   const validate = () => {
     const newErrors = {};
 
@@ -138,6 +144,12 @@ const Navbar = () => {
           >
             Apply Now
           </button>
+          <button
+              onClick={handleApplyNow}
+              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            >
+              Sign Up
+            </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -181,6 +193,13 @@ const Navbar = () => {
             >
               Apply Now
             </button>
+            <button
+              onClick={handleApplyNow}
+              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            >
+              Sign Up
+            </button>
+            
           </div>
         )}
       </nav>

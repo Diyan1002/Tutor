@@ -14,7 +14,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/signup", {
+      const response = await axios.post("https://todo-nu-plum-19.vercel.app/users/register",{
         name,
         email,
         password,

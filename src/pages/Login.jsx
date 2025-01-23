@@ -19,7 +19,7 @@ const Login = () => {
       return;
     }
     console.log("User logged in:", formData);
-    navigate("/welcome");
+    navigate("/");
   };
 
   return (
