@@ -9,7 +9,7 @@ const CourseDetails = () => {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 px-4">
+    <div className="flex flex-col items-center py-8 px-4 overflow-hidden">
       {/* Course Details Section */}
       <motion.div
         className="flex flex-col md:flex-row justify-between items-center p-8"
@@ -46,7 +46,7 @@ const CourseDetails = () => {
 
         {/* Course Fees Section */}
         <motion.div
-          className="md:w-11/12 p-3 mr-6 bg-white rounded-lg shadow-lg"
+          className="w-full md:w-1/2 p-3 bg-white rounded-lg shadow-lg"
           whileInView={{ opacity: 1, x: 0 }}
           initial={{ opacity: 0, x: 50 }}
           viewport={{ once: false, amount: 0.2 }}
@@ -90,10 +90,10 @@ const CourseDetails = () => {
         viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex items-center justify-between border-b pb-4 mb-4">
+        <div className="flex flex-col md:flex-row items-center justify-between border-b pb-4 mb-4">
           {/* Date Section */}
           <motion.div
-            className="flex flex-col items-center"
+            className="flex flex-col items-center mb-4 md:mb-0"
             whileHover={{ scale: 1.05 }}
           >
             <span className="text-3xl font-bold">19</span>
@@ -101,7 +101,7 @@ const CourseDetails = () => {
           </motion.div>
 
           {/* Details Section */}
-          <div className="flex-1 px-6">
+          <div className="flex-1 px-6 text-center md:text-left">
             <h3 className="text-lg font-semibold">Weekend Batch [Sat - Sun]</h3>
           </div>
 
@@ -114,7 +114,7 @@ const CourseDetails = () => {
           </motion.button>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 text-center text-sm text-gray-600">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm text-gray-600">
           <div>
             <p className="font-medium">Batch</p>
             <p>Morning</p>

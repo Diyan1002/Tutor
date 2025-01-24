@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-500 text-white py-10">
+    <footer className="bg-blue-500 text-white py-10 overflow-hidden">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-6">
         {/* My_Tutor Section */}
         <div>

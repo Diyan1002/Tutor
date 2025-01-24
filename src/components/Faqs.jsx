@@ -27,7 +27,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
+    <div className="max-w-4xl mx-auto p-8 overflow-hidden">
       <h2 className="text-center text-sm font-semibold text-blue-500 mb-2 uppercase">Ask Your Questions</h2>
       <h1 className="text-center text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h1>
 

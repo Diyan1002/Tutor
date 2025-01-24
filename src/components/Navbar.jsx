@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // For mobile menu
@@ -28,6 +28,7 @@ const Navbar = () => {
   const handleApplyNow = () => {
     navigate('/signup');
   };
+
   const validate = () => {
     const newErrors = {};
 
@@ -79,42 +80,38 @@ const Navbar = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (validate()) {
-  //     console.log("Form submitted successfully", formData);
-  //     setFormData({
-  //       name: "",
-  //       email: "",
-  //       password: "",
-  //       confirmPassword: "",
-  //       phoneNumber: "",
-  //       gender: "",
-  //     });
-  //     setIsModalOpen(false); // Close modal on successful submission
-  //   } else {
-  //     console.log("Validation failed");
-  //   }
-  // };
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const response = await axios.post('https://todo-nu-plum-19.vercel.app/users/register', {
-        name,
-        email,
-        password,     
-      });     
-      console.log('Success:', data);
-      alert('Form submitted successfully!');
-    }
-    catch (error) {
-      console.error('Error:', error);
+    if (validate()) {
+      try {
+        const response = await axios.post('https://todo-nu-plum-19.vercel.app/users/register', {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        });
+        console.log('Success:', response.data);
+        alert('Form submitted successfully!');
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          phoneNumber: "",
+          gender: "",
+        });
+        setIsModalOpen(false); // Close modal on successful submission
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      console.log("Validation failed");
     }
   };
+
   return (
     <div>
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
+      <nav className="flex items-center justify-between px-4 py-2 bg-white shadow-md overflow-hidden">
         {/* Left: Logo */}
         <div className="flex items-center space-x-2">
           <img
@@ -145,63 +142,84 @@ const Navbar = () => {
             Apply Now
           </button>
           <button
-              onClick={handleApplyNow}
-              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-            >
-              Sign Up
-            </button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center pr-6">
-          <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
+            onClick={handleApplyNow}
+            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          >
+            Sign Up
           </button>
         </div>
 
-        {/* Mobile Navigation Links */}
-        {isOpen && (
-          <div className="md:hidden flex flex-col items-center space-y-4 mt-4">
-            <a href="#about" className="text-gray-700 hover:text-blue-500">
-              About Us
-            </a>
-            <a href="#courses" className="text-gray-700 hover:text-blue-500">
-              Courses
-            </a>
-            <a href="#events" className="text-gray-700 hover:text-blue-500">
-              Events
-            </a>
-            <a href="#blogs" className="text-gray-700 hover:text-blue-500">
-              Blogs
-            </a>
-            <button
-              onClick={toggleModal}
-              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-            >
-              Apply Now
-            </button>
-            <button
-              onClick={handleApplyNow}
-              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-            >
-              Sign Up
-            </button>
-            
-          </div>
-        )}
+       {/* Mobile Menu Button */}
+<div className="md:hidden flex items-center pr-6">
+  <button
+    onClick={toggleMenu}
+    className="text-gray-700 focus:outline-none"
+    aria-label="Toggle Navigation"
+  >
+    <svg
+      className="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M4 6h16M4 12h16m-7 6h7"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+{/* Mobile Navigation Links with Slide-in Animation */}
+<div
+  className={`md:hidden fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+    isOpen ? "translate-x-0" : "-translate-x-full"
+  }`}
+>
+  <div className="flex flex-col items-start space-y-4 p-6">
+    <a
+      href="#about"
+      className="block text-gray-700 hover:text-blue-500 text-lg transition"
+    >
+      About Us
+    </a>
+    <a
+      href="#courses"
+      className="block text-gray-700 hover:text-blue-500 text-lg transition"
+    >
+      Courses
+    </a>
+    <a
+      href="#events"
+      className="block text-gray-700 hover:text-blue-500 text-lg transition"
+    >
+      Events
+    </a>
+    <a
+      href="#blogs"
+      className="block text-gray-700 hover:text-blue-500 text-lg transition"
+    >
+      Blogs
+    </a>
+    <button
+      onClick={toggleModal}
+      className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+    >
+      Apply Now
+    </button>
+    <button
+      onClick={handleApplyNow}
+      className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+    >
+      Sign Up
+    </button>
+  </div>
+</div>
+
+        
       </nav>
 
       {/* Modal */}

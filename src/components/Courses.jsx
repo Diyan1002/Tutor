@@ -32,7 +32,7 @@ const WhyJoinProgram = () => {
           setVisible(true);
         }
       },
-      { threshold: 0.9 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -47,7 +47,7 @@ const WhyJoinProgram = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} className="bg-gray-100 py-12">
+    <div ref={sectionRef} className="bg-gray-100 py-12 overflow-hidden">
       {/* Section Header */}
       <div className="text-center mt-20 p-10">
         <h5 className="text-blue-500 font-semibold tracking-wide uppercase">
@@ -59,22 +59,14 @@ const WhyJoinProgram = () => {
       </div>
 
       {/* Cards Section */}
-      <div className="flex flex-col md:flex-row justify-center gap-8 px-4">
+      <div className="flex flex-wrap justify-center gap-8 px-4">
         {cards.map((card, index) => (
           <div
             key={index}
-            className={`bg-white shadow-lg rounded-lg p-6 text-center w-full md:w-80 transform transition-all duration-1000 ease-in-out ${
+            className={`bg-white shadow-lg rounded-lg p-6 text-center w-full sm:w-80 transform transition-all duration-1000 ease-in-out ${
               visible
-                ? index === 0
-                  ? "translate-x-0"
-                  : index === 1
-                  ? "translate-y-0"
-                  : "translate-x-0"
-                : index === 0
-                ? "-translate-x-10 opacity-0"
-                : index === 1
-                ? "translate-y-10 opacity-0"
-                : "translate-x-10 opacity-0"
+                ? "translate-x-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
           >
             {/* Icon */}
