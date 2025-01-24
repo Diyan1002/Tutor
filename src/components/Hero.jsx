@@ -214,7 +214,7 @@ const HeroSection = () => {
         <img
           src="/man.png" // Replace with actual image path
           alt="Person with laptop"
-          className="w-86 h-auto mb-28 ml-96 transform scale-x-[-1]"
+          className="w-86 h-auto mb-28 ml-96 transform scale-x-[-1] md:block hidden"
         />
       </div>
     </div>
